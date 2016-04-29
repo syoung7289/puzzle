@@ -1,0 +1,35 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.scyoung.puzzlemethis.CategoryFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <AutoCompleteTextView android:id="@+id/categoryToPass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext_shape"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:padding="10dp"
+            android:imeOptions="actionDone"
+            android:hint="@string/category_to_pass" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/categoryToPass"
+            android:id="@+id/categoryGoButton"
+            android:text="@string/button_send"
+            android:background="@drawable/puzzle_button"
+            android:textAppearance="@style/ButtonMediumFontStyle"
+            android:layout_margin="20dp"
+            android:layout_alignParentRight="true"/>
+
+    </RelativeLayout>
+
+</FrameLayout>

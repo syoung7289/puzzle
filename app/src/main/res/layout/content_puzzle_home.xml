@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.scyoung.puzzlemethis.PuzzleHome"
+    tools:showIn="@layout/activity_puzzle_home">
+
+    <ImageView
+        android:id="@+id/image_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:scaleType="centerCrop"
+        android:cropToPadding="true"
+        android:adjustViewBounds="true" />
+
+    <ImageView
+        android:layout_width="230dp"
+        android:layout_height="80dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:padding="15dp"
+        android:scaleType="centerCrop"
+        android:cropToPadding="true"
+        android:adjustViewBounds="true"
+        android:src="@drawable/puzzle_me_this_text"
+        android:id="@+id/imageView" />
+
+    <LinearLayout
+        android:id="@+id/launcher_menu"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_width="130dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:background="@color/colorPrimaryTransparent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <ImageButton
+            android:id="@+id/categoriesButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/categories_menuitem_states"
+            android:background="@android:color/transparent"
+            android:onClick="showCategories"
+            android:layout_weight="1"/>
+
+        <ImageButton
+            android:id="@+id/mixAndMatchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/mix_n_match_menuitem_states"
+            android:background="@android:color/transparent"
+            android:onClick="showMixAndMatch"
+            android:layout_weight="1"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_toRightOf="@id/launcher_menu"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent" />
+
+</RelativeLayout>
