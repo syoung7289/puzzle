@@ -88,9 +88,11 @@ public class CategoryFragment extends Fragment {
         Set<String> uniqueCategories = new HashSet<String>();
         Map<String, ?> allEntries = prefs.getAll();
         for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
-            String prefCategory = entry.getKey().split("~")[0];
-            String displayCategory = StringUtil.convertFromCondensedUpperCase(prefCategory);
-            uniqueCategories.add(displayCategory);
+            if (entry.getKey().contains("~")) {
+                String prefCategory = entry.getKey().split("~")[0];
+                String displayCategory = StringUtil.convertFromCondensedUpperCase(prefCategory);
+                uniqueCategories.add(displayCategory);
+            }
         }
         CATEGORIES = new ArrayList<String>(uniqueCategories);
     }

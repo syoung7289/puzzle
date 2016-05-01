@@ -24,15 +24,16 @@
 
     <ImageView
         android:id="@+id/play_indicator"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp"
         android:background="@drawable/play_icon0"
         android:scaleType="fitCenter"
         android:onClick="playSound"
+        android:visibility="invisible"
         android:cropToPadding="true" />
 
 </RelativeLayout>

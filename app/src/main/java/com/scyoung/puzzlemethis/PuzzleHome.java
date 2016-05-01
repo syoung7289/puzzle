@@ -71,7 +71,7 @@ public class PuzzleHome extends AppCompatActivity implements CategoryFragment.On
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        Bitmap background = ImageUtil.getScaledBitmap(R.drawable.puzzle_pieces_white_corner, size.x, size.y, this);
+        Bitmap background = ImageUtil.getScaledBitmapFromResources(R.drawable.puzzle_pieces_white_corner, size.x, size.y, this);
         container.setImageBitmap(background);
     }
 

@@ -17,6 +17,7 @@
             android:layout_marginTop="20dp"
             android:padding="10dp"
             android:imeOptions="actionDone"
+            android:completionThreshold="1"
             android:hint="@string/category_to_pass" />
 
         <Button

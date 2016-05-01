@@ -170,7 +170,7 @@ public class CategoryBuilder extends AppCompatActivity {
                 int maxButtonSide = getMinimumButtonDimension();
                 Log.d("buildButton", "before setScaled for loop " + i +  " at " + (new Date()).toString());
                 viewButtons[i].setImageBitmap(
-                        ImageUtil.getScaledBitmap(imageUri, maxButtonSide));
+                        ImageUtil.getScaledBitmapFromStorage(imageUri, maxButtonSide, maxButtonSide));
                 viewButtons[i].setBackgroundColor(Color.TRANSPARENT);
                 registerForContextMenu(viewButtons[i]);
             }
@@ -277,7 +277,8 @@ public class CategoryBuilder extends AppCompatActivity {
                 if (resultCode == RESULT_OK) {
                     final Uri imageUri = returnedIntent.getData();
                     int maxButtonSide = getButtonDimension(2,1);
-                    Bitmap selectedImage = ImageUtil.getScaledBitmap(imageUri, maxButtonSide);
+                    Bitmap selectedImage = ImageUtil.getScaledBitmapFromGallery(imageUri,
+                            maxButtonSide, maxButtonSide, this);
                     if (selectedImage != null) {
                         File internalFile = ImageUtil.saveBitmapToInternalStorage(
                                 getCategoryButtonName(CURRENT_BUTTON_NAME),

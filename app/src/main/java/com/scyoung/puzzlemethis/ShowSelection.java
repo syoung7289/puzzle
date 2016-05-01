@@ -149,13 +149,14 @@ public class ShowSelection extends AppCompatActivity {
 
     private void playingIndicator(boolean on) {
         ImageView indicator = (ImageView)findViewById(R.id.play_indicator);
+        indicator.setVisibility(View.VISIBLE);
         if (on) {
-            indicator.setBackgroundResource(R.drawable.play_animation);
+            indicator.setBackgroundResource(R.drawable.play_selection_animation);
             AnimationDrawable background = (AnimationDrawable) indicator.getBackground();
             background.start();
         }
         else if (audioLocation != null){
-            indicator.setBackgroundResource(R.drawable.play_icon0);
+            indicator.setBackgroundResource(R.drawable.play);
         }
         else {
             indicator.setBackgroundResource(0);
