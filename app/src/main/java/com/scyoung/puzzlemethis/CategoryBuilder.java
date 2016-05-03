@@ -1,5 +1,6 @@
 package com.scyoung.puzzlemethis;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -13,6 +14,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -29,6 +31,7 @@ import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import com.scyoung.puzzlemethis.Util.AudioUtil;
@@ -62,7 +65,7 @@ public class CategoryBuilder extends AppCompatActivity {
     private String CURRENT_BUTTON_ABSOLUTE_NAME;
     private String CURRENT_BUTTON_NAME = "name_to_change";
     private int CURRENT_BUTTON_ID;
-    private ImageButton CURRENT_BUTTON = null;
+    protected ImageButton CURRENT_BUTTON = null;
     private final int SELECT_PHOTO = 1;
     private final int SELECT_AUDIO = 2;
     private String passedCategory;
@@ -276,28 +279,8 @@ public class CategoryBuilder extends AppCompatActivity {
             case SELECT_PHOTO:
                 if (resultCode == RESULT_OK) {
                     final Uri imageUri = returnedIntent.getData();
-                    int maxButtonSide = getButtonDimension(2,1);
-                    Bitmap selectedImage = ImageUtil.getScaledBitmapFromGallery(imageUri,
-                            maxButtonSide, maxButtonSide, this);
-                    if (selectedImage != null) {
-                        File internalFile = ImageUtil.saveBitmapToInternalStorage(
-                                getCategoryButtonName(CURRENT_BUTTON_NAME),
-                                selectedImage,
-                                this);
-                        if (internalFile != null) {
-                            SharedPreferences.Editor editor = prefs.edit();
-                            editor.putString(
-                                    getCategoryButtonName(CURRENT_BUTTON_ABSOLUTE_NAME),
-                                    internalFile.toString());
-                            editor.commit();
-
-                            CURRENT_BUTTON.setImageBitmap(selectedImage);
-                            CURRENT_BUTTON.setBackgroundColor(Color.TRANSPARENT);
-                            CURRENT_BUTTON.setOnClickListener(buttonSelectedClickListener);
-                            addButtonAttribute(CURRENT_BUTTON, SELECT_PHOTO);
-                            registerForContextMenu(CURRENT_BUTTON);
-                        }
-                    }
+                    ProgressBar pb = getProgressBarForCurrentButton();
+                    new ImageLoader(imageUri, pb, this).execute();
                 }
                 break;
             case SELECT_AUDIO:
@@ -342,12 +325,14 @@ public class CategoryBuilder extends AppCompatActivity {
         ImageView indicator = buttonIndicators[getButtonIndex(button.getId())];
         if (on) {
             button.setAlpha(0.5f);
+            indicator.setVisibility(View.VISIBLE);
             indicator.setBackgroundResource(R.drawable.rec_animation);
             AnimationDrawable background = (AnimationDrawable) indicator.getBackground();
             background.start();
         }
         else {
             button.setAlpha(1f);
+            indicator.setVisibility(View.GONE);
             indicator.setBackgroundResource(0);
         }
     }
@@ -865,7 +850,8 @@ public class CategoryBuilder extends AppCompatActivity {
     public boolean preparedForAnotherEvent() {
         for (int i=0; i<buttonIndicators.length; i++) {
             viewButtons[i].setAlpha(1f);
-            viewButtons[i].setOnClickListener(determineClickListener((int)viewButtons[i].getTag()));
+            viewButtons[i].setOnClickListener(determineClickListener((int) viewButtons[i].getTag()));
+            buttonIndicators[i].setVisibility(View.GONE);
             buttonIndicators[i].setBackgroundResource(0);
         }
         if (myAudioRecorder != null) {
@@ -916,5 +902,73 @@ public class CategoryBuilder extends AppCompatActivity {
     private int getMinimumButtonDimension() {
         int numInitialButtons = prefs.getInt("pref_num_button_default", 2);
         return Math.min(DISPLAY_HEIGHT / numInitialButtons, DISPLAY_WIDTH / numInitialButtons);
+    }
+
+    private ProgressBar getProgressBarForCurrentButton() {
+        ProgressBar pb = null;
+        RelativeLayout parent = (RelativeLayout)CURRENT_BUTTON.getParent();
+        int count = parent.getChildCount();
+        for (int i = 0; i <= count; i++) {
+            View v = parent.getChildAt(i);
+            if (v instanceof ProgressBar) {
+                pb = (ProgressBar)v;
+            }
+        }
+        return pb;
+    }
+
+    public class ImageLoader extends AsyncTask<String,Integer,Boolean> {
+
+        private ProgressBar progressBar;
+        private Uri imageUri;
+        private Context mContext;
+        private Bitmap found;
+
+        public ImageLoader(Uri uri, ProgressBar progressBar, Context context) {
+            super();
+            this.progressBar = progressBar;
+            this.imageUri = uri;
+            this.mContext = context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            int maxButtonSide = getButtonDimension(2, 1);
+            found = ImageUtil.getScaledBitmapFromGallery(imageUri,
+                    maxButtonSide, maxButtonSide, mContext);
+            if (found != null) {
+                File internalFile = ImageUtil.saveBitmapToInternalStorage(
+                        getCategoryButtonName(CURRENT_BUTTON_NAME),
+                        found,
+                        mContext);
+                if (internalFile != null) {
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString(
+                            getCategoryButtonName(CURRENT_BUTTON_ABSOLUTE_NAME),
+                            internalFile.toString());
+                    editor.commit();
+                }
+            }
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            if (found != null) {
+                CURRENT_BUTTON.setImageBitmap(found);
+                CURRENT_BUTTON.setBackgroundColor(Color.TRANSPARENT);
+                CURRENT_BUTTON.setOnClickListener(buttonSelectedClickListener);
+                addButtonAttribute(CURRENT_BUTTON, SELECT_PHOTO);
+                registerForContextMenu(CURRENT_BUTTON);
+            }
+            progressBar.setVisibility(View.GONE);
+        }
     }
 }
