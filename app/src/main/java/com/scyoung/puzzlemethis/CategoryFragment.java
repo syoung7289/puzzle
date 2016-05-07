@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.scyoung.puzzlemethis.Util.StringUtil;
 
@@ -50,6 +53,7 @@ public class CategoryFragment extends Fragment {
                 android.R.layout.simple_dropdown_item_1line, CATEGORIES);
         categorySelection = (AutoCompleteTextView)view.findViewById(R.id.categoryToPass);
         categorySelection.setAdapter(adapter);
+        addTextChangedListener(categorySelection);
         goButton = (Button)view.findViewById(R.id.categoryGoButton);
         goButton.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -96,4 +100,28 @@ public class CategoryFragment extends Fragment {
         }
         CATEGORIES = new ArrayList<String>(uniqueCategories);
     }
+
+    private void addTextChangedListener(AutoCompleteTextView textView) {
+        textView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                EnableGoIfReady(s);
+            }
+        });
+    }
+
+    private void EnableGoIfReady(Editable text) {
+        goButton.setEnabled(text.length() > 0);
+    }
+
 }

@@ -162,6 +162,10 @@ public class PuzzleHome extends AppCompatActivity implements CategoryFragment.On
                 .commit();
     }
 
+    public void setPreferences(View view) {
+
+    }
+
 
     private void deleteSharedPreferenceFile(String fileName) {
         try {

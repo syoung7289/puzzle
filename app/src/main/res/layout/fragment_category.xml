@@ -27,8 +27,10 @@
             android:id="@+id/categoryGoButton"
             android:text="@string/button_send"
             android:background="@drawable/puzzle_button"
+            android:textColor="@color/button_text"
             android:textAppearance="@style/ButtonMediumFontStyle"
             android:layout_margin="20dp"
+            android:enabled="false"
             android:layout_alignParentRight="true"/>
 
     </RelativeLayout>

@@ -2,6 +2,7 @@ package com.scyoung.puzzlemethis;
 
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -35,6 +36,7 @@ public class ShowSelection extends AppCompatActivity {
         SCREEN_ORIENTATION = ((rotation == Surface.ROTATION_90 || rotation == Surface.ROTATION_270) ? "LANDSCAPE" : "PORTRAIT");
         Log.d("CA", "onCreate started: " + SCREEN_ORIENTATION);
         setContentView(R.layout.activity_show_selection);
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
