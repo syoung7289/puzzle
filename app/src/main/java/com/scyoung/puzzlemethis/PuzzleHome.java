@@ -163,7 +163,8 @@ public class PuzzleHome extends AppCompatActivity implements CategoryFragment.On
     }
 
     public void setPreferences(View view) {
-
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
     }
 
 
