@@ -42,15 +42,6 @@
                 android:value="com.scyoung.puzzlemethis.CategoryBuilder" />
         </activity>
         <activity
-            android:name=".ChoosePreferences"
-            android:label="@string/title_activity_choose_preferences"
-            android:parentActivityName=".PuzzleHome"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.scyoung.puzzlemethis.PuzzleHome" />
-        </activity>
-        <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
             android:parentActivityName=".PuzzleHome">
@@ -58,6 +49,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.scyoung.puzzlemethis.PuzzleHome" />
         </activity>
+        <activity
+            android:name=".PasscodeActivity"
+            android:label="@string/title_activity_passcode"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

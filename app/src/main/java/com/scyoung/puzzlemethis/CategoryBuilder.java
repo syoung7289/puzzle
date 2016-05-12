@@ -3,6 +3,7 @@ package com.scyoung.puzzlemethis;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -17,6 +18,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -102,7 +104,8 @@ public class CategoryBuilder extends AppCompatActivity {
         getSupportActionBar().setTitle("Category: " + categoryTitleCase);
 
         shouldRedraw = false;
-        prefs = getSharedPreferences(getString(R.string.preference_file), MODE_PRIVATE);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+//        prefs = getSharedPreferences(getString(R.string.preference_file), MODE_PRIVATE);
         res = getResources();
         container = (RelativeLayout) findViewById(R.id.category_container);
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
@@ -120,6 +123,19 @@ public class CategoryBuilder extends AppCompatActivity {
         }
 
         buildButtons();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String orientation = prefs.getString("screen_orient", "BOTH");
+        if ("PORTRAIT".equals(orientation)) {
+            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        } else if ("LANDSCAPE".equals(orientation)){
+            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+        } else {
+            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+        }
     }
 
     @Override
@@ -204,7 +220,7 @@ public class CategoryBuilder extends AppCompatActivity {
 
 
     private void initButtonVisibility() {
-        int numInitialButtons = prefs.getInt("pref_num_button_default", 2);
+        int numInitialButtons = Integer.parseInt(prefs.getString("num_images", "2"));
         for (int i=0; i<viewButtons.length; i++) {
             if (i+1 > numInitialButtons) {
                 viewButtons[i].setVisibility(View.GONE);

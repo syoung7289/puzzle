@@ -1,0 +1,10 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.scyoung.puzzlemethis.preference.PasscodeSwitchPreference
+        android:defaultValue="false"
+        android:key="admin_restriction"
+        android:title="@string/pref_title_admin_restrictions"
+        android:summaryOff="@string/pref_summary_admin_restrictions"
+        android:summaryOn="@string/pref_summary_admin_set"/>
+
+</PreferenceScreen>

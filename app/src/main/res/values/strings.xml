@@ -35,28 +35,20 @@
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
 
-    <string name="pref_title_social_recommendations">Enable social recommendations</string>
-    <string name="pref_description_social_recommendations">Recommendations for people to contact
-        based on your message history
-    </string>
-
-    <string name="pref_title_display_name">Display name</string>
-    <string name="pref_default_display_name">John Smith</string>
-
-    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
-    <string-array name="pref_example_list_titles">
-        <item>Always</item>
-        <item>When possible</item>
-        <item>Never</item>
+    <string name="pref_title_select_scr_orient">Screen rotation options</string>
+    <string-array name="pref_scr_orient_titles">
+        <item>Landscape only</item>
+        <item>Portrait only</item>
+        <item>Allow Rotation</item>
     </string-array>
-    <string-array name="pref_example_list_values">
-        <item>1</item>
-        <item>0</item>
-        <item>-1</item>
+    <string-array name="pref_scr_orient_values">
+        <item>LANDSCAPE</item>
+        <item>PORTRAIT</item>
+        <item>BOTH</item>
     </string-array>
 
     <!-- Example settings for Data & Sync -->
-    <string name="pref_header_data_sync">Data Management</string>
+    <string name="pref_header_data_sync">Puzzle Data</string>
 
     <string name="pref_title_num_images">Default Number of Images</string>
     <string-array name="pref_num_image_titles">
@@ -74,16 +66,21 @@
         <item>6</item>
     </string-array>
 
-    <string name="pref_title_system_sync_settings">System sync settings</string>
+    <string name="select_categories_to_delete">Select Categories to Delete</string>
 
-    <!-- Example settings for Notifications -->
-    <string name="pref_header_notifications">Notifications</string>
-
-    <string name="pref_title_new_message_notifications">New message notifications</string>
-
-    <string name="pref_title_ringtone">Ringtone</string>
-    <string name="pref_ringtone_silent">Silent</string>
-
-    <string name="pref_title_vibrate">Vibrate</string>
+    <string-array name="empty_array"></string-array>
+    <string name="bulk_delete_title">Delete Unused Categories</string>
+    <string name="pref_dialog_message_reset_factory">Restoring factory defaults cannot be undone.  All categories, images and user preferences will be lost.</string>
+    <string name="pref_dialog_title_reset_factory">Reset to Factory Defaults</string>
+    <string name="pref_dialog_neg_reset_factory">Cancel</string>
+    <string name="pref_dialog_pos_reset_factory">I understand, continue</string>
+    <string name="pref_title_reset_factory">Reset to Factory Settings</string>
+    <string name="pref_summary_reset_factory">Will require passcode if admin restrictions on</string>
+    <string name="pref_header_admin">Admin Settings</string>
+    <string name="pref_title_admin_restrictions">Admin Restrictions</string>
+    <string name="pref_summary_admin_restrictions">Create passcode to secure data</string>
+    <string name="title_activity_passcode">" "</string>
+    <string name="passcode_set_result">passcode_set_result</string>
+    <string name="pref_summary_admin_set">Passcode set</string>
 
 </resources>

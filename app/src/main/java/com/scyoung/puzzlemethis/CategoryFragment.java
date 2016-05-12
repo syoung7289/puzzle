@@ -3,6 +3,7 @@ package com.scyoung.puzzlemethis;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -38,7 +39,8 @@ public class CategoryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        prefs = getActivity().getSharedPreferences(getString(R.string.preference_file), Context.MODE_PRIVATE);
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+//        prefs = getActivity().getSharedPreferences(getString(R.string.preference_file), Context.MODE_PRIVATE);
         Log.d("FRAG", "onCreate");
     }
 

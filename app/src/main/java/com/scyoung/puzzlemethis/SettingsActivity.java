@@ -2,8 +2,11 @@ package com.scyoung.puzzlemethis;
 
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -13,13 +16,19 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceScreen;
 import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
+
+import com.scyoung.puzzlemethis.preference.BulkDeleteListPreference;
+import com.scyoung.puzzlemethis.preference.DialogExPreference;
+import com.scyoung.puzzlemethis.preference.PasscodeSwitchPreference;
 
 import java.util.List;
 
@@ -61,7 +70,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 // using RingtoneManager.
                 if (TextUtils.isEmpty(stringValue)) {
                     // Empty values correspond to 'silent' (no ringtone).
-                    preference.setSummary(R.string.pref_ringtone_silent);
+                    preference.setSummary("Silent");
 
                 } else {
                     Ringtone ringtone = RingtoneManager.getRingtone(
@@ -123,6 +132,12 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         setupActionBar();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setScreenOrientation();
+    }
+
     /**
      * Set up the {@link android.app.ActionBar}, if the API is available.
      */
@@ -130,7 +145,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             // Show the Up button in the action bar.
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setLogo(R.mipmap.puzzleme_logo_no_background_wider);
+            getSupportActionBar().setDisplayUseLogoEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
 
@@ -169,8 +187,66 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
      */
     protected boolean isValidFragment(String fragmentName) {
         return PreferenceFragment.class.getName().equals(fragmentName)
+                || AdminPreferenceFragment.class.getName().equals(fragmentName)
                 || GeneralPreferenceFragment.class.getName().equals(fragmentName)
-                || DataSyncPreferenceFragment.class.getName().equals(fragmentName);
+                || DataManagementPreferenceFragment.class.getName().equals(fragmentName);
+    }
+
+    /**
+     * This fragment shows data and sync preferences only. It is used when the
+     * activity is showing a two-pane settings UI.
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class AdminPreferenceFragment extends PreferenceFragment {
+        private static final int PASSCODE_RESULT = 0;
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.pref_admin);
+            setHasOptionsMenu(true);
+
+            findPreference("admin_restriction").setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+//                    boolean checked = (boolean)newValue;
+//                    if (checked) {
+                        Intent i = new Intent(getActivity(), PasscodeActivity.class);
+                        startActivityForResult(i, PASSCODE_RESULT);
+//                    }
+                    return true;
+                }
+            });
+
+        }
+
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            int id = item.getItemId();
+            if (id == android.R.id.home) {
+                startActivity(new Intent(getActivity(), SettingsActivity.class));
+                return true;
+            }
+            return super.onOptionsItemSelected(item);
+        }
+
+        @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            super.onActivityResult(requestCode, resultCode, data);
+            switch(requestCode) {
+                case (PASSCODE_RESULT) : {
+                    if (resultCode == Activity.RESULT_OK) {
+                        boolean passcodeSuccess = data.getBooleanExtra(getResources().getString(R.string.passcode_set_result), false);
+                        if (!passcodeSuccess) {
+                            PasscodeSwitchPreference psPref = (PasscodeSwitchPreference)findPreference("admin_restriction");
+                            boolean currentSwitchSetting = psPref.isChecked();
+                            psPref.setChecked(!currentSwitchSetting);
+                        }
+                    }
+                    break;
+                }
+            }
+        }
     }
 
     /**
@@ -189,9 +265,40 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-            bindPreferenceSummaryToValue(findPreference("example_text"));
-            bindPreferenceSummaryToValue(findPreference("example_list"));
+//            bindPreferenceSummaryToValue(findPreference("screen_orient"));
             bindPreferenceSummaryToValue(findPreference("num_images"));
+            bindScreenPreferenceSummary(findPreference("screen_orient"));
+        }
+
+        private void bindScreenPreferenceSummary(Preference screenOrientPref) {
+            ListPreference screenOrientListPref = (ListPreference)screenOrientPref;
+            int index = screenOrientListPref.findIndexOfValue(screenOrientListPref.getValue().toString());
+            screenOrientListPref.setSummary(
+                    index >= 0
+                            ? screenOrientListPref.getEntries()[index]
+                            : null);
+
+            screenOrientPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    if ("PORTRAIT".equals(newValue)) {
+                        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                    } else if ("LANDSCAPE".equals(newValue)){
+                        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+                    } else {
+                        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+                    }
+                    ListPreference listPreference = (ListPreference) preference;
+                    int index = listPreference.findIndexOfValue(newValue.toString());
+
+                    // Set the summary to reflect the new value.
+                    preference.setSummary(
+                            index >= 0
+                                    ? listPreference.getEntries()[index]
+                                    : null);
+                    return true;
+                }
+            });
         }
 
         @Override
@@ -210,18 +317,32 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
      * activity is showing a two-pane settings UI.
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class DataSyncPreferenceFragment extends PreferenceFragment {
+    public static class DataManagementPreferenceFragment extends PreferenceFragment {
+
+        private static final int PASSCODE_RESULT = 0;
+
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.pref_data_sync);
+            addPreferencesFromResource(R.xml.pref_data_mgmt);
             setHasOptionsMenu(true);
 
-            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-            // to their values. When their values change, their summaries are
-            // updated to reflect the new value, per the Android Design
-            // guidelines.
-            bindPreferenceSummaryToValue(findPreference("num_images"));
+            findPreference("factory_defaults").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    boolean clickHandled = true;
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                    if (prefs.getBoolean("admin_restriction", false) && !prefs.getBoolean("password_prompt", false)) {
+                        ((DialogExPreference)preference).getDialog().dismiss();
+                        Intent i = new Intent(getActivity(), PasscodeActivity.class);
+                        startActivityForResult(i, PASSCODE_RESULT);
+                        clickHandled = false;
+                    }
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.remove("password_prompt").commit();
+                    return clickHandled;
+                }
+            });
         }
 
         @Override
@@ -232,6 +353,38 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 return true;
             }
             return super.onOptionsItemSelected(item);
+        }
+
+        @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            super.onActivityResult(requestCode, resultCode, data);
+            switch(requestCode) {
+                case (PASSCODE_RESULT) : {
+                    if (resultCode == Activity.RESULT_OK) {
+                        boolean passcodeSuccess = data.getBooleanExtra(getResources().getString(R.string.passcode_set_result), false);
+                        if (passcodeSuccess) {
+                            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                            SharedPreferences.Editor editor = prefs.edit();
+                            editor.putBoolean("password_prompt", true).commit();
+                            PreferenceScreen screen = (PreferenceScreen)findPreference("data_management_screen");
+                            int order = findPreference("factory_defaults").getOrder();
+                            screen.onItemClick(null, null, order, 0);
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
+    protected void setScreenOrientation() {
+        String orientation = PreferenceManager.getDefaultSharedPreferences(this).getString("screen_orient", "BOTH");
+        if ("PORTRAIT".equals(orientation)) {
+            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        } else if ("LANDSCAPE".equals(orientation)){
+            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+        } else {
+            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
         }
     }
 }

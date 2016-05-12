@@ -1,5 +1,7 @@
 package com.scyoung.puzzlemethis;
 
+import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.AudioManager;
@@ -7,6 +9,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -89,6 +92,20 @@ public class ShowSelection extends AppCompatActivity {
             }, 10);
         }
         super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String orientation = prefs.getString("screen_orient", "BOTH");
+        if ("PORTRAIT".equals(orientation)) {
+            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        } else if ("LANDSCAPE".equals(orientation)){
+            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+        } else {
+            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+        }
     }
 
     @Override

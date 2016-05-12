@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:id="@+id/preferencesButton"
-                android:src="@android:drawable/ic_menu_preferences"
+                android:src="@drawable/cog_24dp"
                 android:background="@android:color/transparent"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"

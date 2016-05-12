@@ -1,12 +1,15 @@
 package com.scyoung.puzzlemethis;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -22,6 +25,7 @@ import java.util.Map;
 
 public class PuzzleHome extends AppCompatActivity implements CategoryFragment.OnFragmentInteractionListener, MixAndMatchFragment.OnFragmentInteractionListener {
 
+    private static final int PASSCODE_RESULT = 0;
     private SharedPreferences prefs;
     private ImageView container;
     private FragmentManager fragmentManager = getSupportFragmentManager();
@@ -37,7 +41,11 @@ public class PuzzleHome extends AppCompatActivity implements CategoryFragment.On
         getSupportActionBar().setLogo(R.mipmap.puzzleme_logo_no_background_wider);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         container = (ImageView)findViewById(R.id.image_container);
-        prefs = getSharedPreferences(getString(R.string.preference_file), MODE_PRIVATE);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        Log.d("PuzHome", "Internal filesystem free space" + Long.toString(this.getFilesDir().getFreeSpace()));
+
+        //flushPreferences();
 
         if (savedInstanceState != null) {
             showMixAndMatch = savedInstanceState.getBoolean("showMixAndMatch", false);
@@ -50,17 +58,6 @@ public class PuzzleHome extends AppCompatActivity implements CategoryFragment.On
         else {
             showCategories(findViewById(R.id.categoriesButton));
         }
-
-//        Map<String, ?> allEntries = prefs.getAll();
-//        SharedPreferences.Editor editor = prefs.edit();
-//        for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
-//            if (!entry.getKey().contains("pref")) {
-//                deleteSharedPreferenceFile((String) entry.getValue());
-//            }
-//            editor.remove(entry.getKey());
-//        }
-//        editor.commit();
-//        Log.d("Flushed Preferences: ", "complete");
 
         initPreferences();
     }
@@ -82,6 +79,19 @@ public class PuzzleHome extends AppCompatActivity implements CategoryFragment.On
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        String orientation = prefs.getString("screen_orient", "BOTH");
+        if ("PORTRAIT".equals(orientation)) {
+            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        } else if ("LANDSCAPE".equals(orientation)){
+            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+        } else {
+            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+        }
+    }
+
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
 
         outState.putBoolean("showMixAndMatch", findViewById(R.id.mixAndMatchButton).isActivated());
@@ -93,10 +103,6 @@ public class PuzzleHome extends AppCompatActivity implements CategoryFragment.On
      */
     private void initPreferences() {
         SharedPreferences.Editor editor;
-
-//        editor = prefs.edit();
-//        editor.putInt("pref_num_button_default", 3);
-//        editor.commit();
 
         //write no image pic to preferences as encoded string
         if (prefs.getString(getString(R.string.no_image_key), null) == null) {
@@ -165,8 +171,36 @@ public class PuzzleHome extends AppCompatActivity implements CategoryFragment.On
     public void setPreferences(View view) {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
+//        Intent i = new Intent(this,PasscodeActivity.class);
+//        startActivityForResult(i, PASSCODE_RESULT);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case (PASSCODE_RESULT) : {
+                if (resultCode == Activity.RESULT_OK) {
+                    boolean passcodeSuccess = data.getBooleanExtra(getResources().getString(R.string.passcode_set_result), false);
+                }
+                break;
+            }
+        }
+    }
+
+    public void flushPreferences() {
+        Map<String, ?> allEntries = prefs.getAll();
+        SharedPreferences.Editor editor = prefs.edit();
+        for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
+            if (entry.getKey().contains("~")) {
+                deleteSharedPreferenceFile((String) entry.getValue());
+            }
+            editor.remove(entry.getKey());
+        }
+        editor.commit();
+        Log.d("Flushed Preferences: ", "complete");
+        initPreferences();
+    }
 
     private void deleteSharedPreferenceFile(String fileName) {
         try {
@@ -177,4 +211,5 @@ public class PuzzleHome extends AppCompatActivity implements CategoryFragment.On
             // didn't exist keep going
         }
     }
+
 }

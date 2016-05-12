@@ -1,0 +1,20 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="data_management_screen">
+
+    <com.scyoung.puzzlemethis.preference.BulkDeleteListPreference
+        android:dialogTitle="@string/select_categories_to_delete"
+        android:key="bulk_delete"
+        android:summary=""
+        android:title="@string/bulk_delete_title"
+        android:defaultValue="@array/empty_array"/>
+
+    <com.scyoung.puzzlemethis.preference.DialogExPreference
+        android:dialogMessage="@string/pref_dialog_message_reset_factory"
+        android:dialogTitle="@string/pref_dialog_title_reset_factory"
+        android:negativeButtonText="@string/pref_dialog_neg_reset_factory"
+        android:positiveButtonText="@string/pref_dialog_pos_reset_factory"
+        android:key="factory_defaults"
+        android:title="@string/pref_title_reset_factory"
+        android:summary="@string/pref_summary_reset_factory"/>
+
+</PreferenceScreen>
