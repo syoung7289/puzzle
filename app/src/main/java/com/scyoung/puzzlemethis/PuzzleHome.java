@@ -181,7 +181,7 @@ public class PuzzleHome extends AppCompatActivity implements CategoryFragment.On
         switch(requestCode) {
             case (PASSCODE_RESULT) : {
                 if (resultCode == Activity.RESULT_OK) {
-                    boolean passcodeSuccess = data.getBooleanExtra(getResources().getString(R.string.passcode_set_result), false);
+                    boolean passcodeSuccess = data.getBooleanExtra(getResources().getString(R.string.passcode_success), false);
                 }
                 break;
             }

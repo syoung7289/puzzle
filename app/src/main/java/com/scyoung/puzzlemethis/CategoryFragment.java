@@ -11,10 +11,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 
 import com.scyoung.puzzlemethis.Util.StringUtil;
 
@@ -55,7 +56,7 @@ public class CategoryFragment extends Fragment {
                 android.R.layout.simple_dropdown_item_1line, CATEGORIES);
         categorySelection = (AutoCompleteTextView)view.findViewById(R.id.categoryToPass);
         categorySelection.setAdapter(adapter);
-        addTextChangedListener(categorySelection);
+        addListeners(categorySelection);
         goButton = (Button)view.findViewById(R.id.categoryGoButton);
         goButton.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -103,7 +104,7 @@ public class CategoryFragment extends Fragment {
         CATEGORIES = new ArrayList<String>(uniqueCategories);
     }
 
-    private void addTextChangedListener(AutoCompleteTextView textView) {
+    private void addListeners(AutoCompleteTextView textView) {
         textView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -117,12 +118,21 @@ public class CategoryFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                EnableGoIfReady(s);
+                enableGoIfReady(s);
             }
+        });
+        textView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                InputMethodManager in = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                in.hideSoftInputFromWindow(arg1.getApplicationWindowToken(), 0);
+            }
+
         });
     }
 
-    private void EnableGoIfReady(Editable text) {
+    private void enableGoIfReady(Editable text) {
         goButton.setEnabled(text.length() > 0);
     }
 

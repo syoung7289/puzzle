@@ -8,39 +8,115 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#FFF"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.scyoung.puzzlemethis.PasscodeActivity"
     tools:showIn="@layout/activity_passcode">
 
-    <TextView
-        android:id="@+id/simulatePasscode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="Simulate passcode success"/>
+    <RelativeLayout
+        android:id="@+id/passcodeContainer"
+        android:layout_width="300dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/passcode_container_border"
+        android:layout_centerHorizontal="true">
+        
+        <RelativeLayout
+            android:id="@+id/upperMessageContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_alignParentTop="true">
+            
+            <TextView
+                android:id="@+id/enterPasscodeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/enter_passcode"/>
+    
+        </RelativeLayout>
+        
+        <RelativeLayout
+            android:id="@+id/passcodeBoxesContainer"
+            android:layout_below="@id/upperMessageContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true">
+            
+            <EditText
+                android:id="@+id/passcodeDigit1"
+                android:imeOptions="flagNoExtractUi"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:maxLength="1"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:background="@drawable/passcode_border"
+                android:inputType="numberPassword"
+                android:layout_marginLeft="5dp"/>
+            <EditText
+                android:id="@+id/passcodeDigit2"
+                android:imeOptions="flagNoExtractUi"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:maxLength="1"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:background="@drawable/passcode_border"
+                android:inputType="numberPassword"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/passcodeDigit1" />
+            <EditText
+                android:id="@+id/passcodeDigit3"
+                android:imeOptions="flagNoExtractUi"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:maxLength="1"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:background="@drawable/passcode_border"
+                android:inputType="numberPassword"
+                android:layout_toRightOf="@id/passcodeDigit2"
+                android:layout_marginLeft="10dp"/>
+            <EditText
+                android:id="@+id/passcodeDigit4"
+                android:imeOptions="flagNoExtractUi"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:maxLength="1"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:background="@drawable/passcode_border"
+                android:inputType="numberPassword"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/passcodeDigit3"
+                android:layout_marginRight="5dp"/>
 
-    <LinearLayout
-        android:id="@+id/buttonContainer"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_centerInParent="true"
-        android:layout_below="@id/simulatePasscode"
-        android:orientation="horizontal">
+        </RelativeLayout>
 
-        <Button
-            android:id="@+id/trueButton"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:text="True"
-            android:onClick="setPreferenceTrue"/>
+        <RelativeLayout
+            android:id="@+id/lowerMessageContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/passcodeBoxesContainer"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
 
-        <Button
-            android:id="@+id/falseButton"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:text="False"
-            android:onClick="setPreferenceFalse"/>
+            <TextView
+                android:id="@+id/errorText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/passcodes_dont_match"
+                android:textColor="@color/colorSecondaryRed"
+                android:visibility="gone"
+                android:textStyle="bold"/>
 
-    </LinearLayout>
+        </RelativeLayout>
+
+    </RelativeLayout>
 
 </RelativeLayout>

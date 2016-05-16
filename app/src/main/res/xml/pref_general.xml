@@ -18,4 +18,13 @@
         android:positiveButtonText="@null"
         android:title="@string/pref_title_num_images" />
 
+    <ListPreference
+        android:defaultValue="1"
+        android:entries="@array/pref_audio_quality_titles"
+        android:entryValues="@array/pref_audio_quality_values"
+        android:key="audio_quality"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_title_audio_quality" />
+
 </PreferenceScreen>

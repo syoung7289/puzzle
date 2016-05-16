@@ -35,7 +35,7 @@
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
 
-    <string name="pref_title_select_scr_orient">Screen rotation options</string>
+    <string name="pref_title_select_scr_orient">Screen Rotation Options</string>
     <string-array name="pref_scr_orient_titles">
         <item>Landscape only</item>
         <item>Portrait only</item>
@@ -66,6 +66,18 @@
         <item>6</item>
     </string-array>
 
+    <string name="pref_title_audio_quality">Audio Recording Quality</string>
+    <string-array name="pref_audio_quality_titles">
+        <item>Low (requires least space)</item>
+        <item>Medium (recommended)</item>
+        <item>High (requires most space)</item>
+    </string-array>
+    <string-array name="pref_audio_quality_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
     <string name="select_categories_to_delete">Select Categories to Delete</string>
 
     <string-array name="empty_array"></string-array>
@@ -80,7 +92,12 @@
     <string name="pref_title_admin_restrictions">Admin Restrictions</string>
     <string name="pref_summary_admin_restrictions">Create passcode to secure data</string>
     <string name="title_activity_passcode">" "</string>
-    <string name="passcode_set_result">passcode_set_result</string>
+    <string name="passcode_success">passcode_set_result</string>
     <string name="pref_summary_admin_set">Passcode set</string>
+    <string name="passcode_action">passcode_action</string>
+    <string name="enter_passcode">Enter your Passcode</string>
+    <string name="reenter_passcode">Verify your Passcode</string>
+    <string name="passcodes_dont_match">Passcodes do not match</string>
+    <string name="passcode_doesnt_match">Passcode does not match saved passcode</string>
 
 </resources>

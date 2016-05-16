@@ -22,11 +22,9 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
 
-import com.scyoung.puzzlemethis.preference.BulkDeleteListPreference;
 import com.scyoung.puzzlemethis.preference.DialogExPreference;
 import com.scyoung.puzzlemethis.preference.PasscodeSwitchPreference;
 
@@ -60,10 +58,18 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 int index = listPreference.findIndexOfValue(stringValue);
 
                 // Set the summary to reflect the new value.
-                preference.setSummary(
-                        index >= 0
-                                ? listPreference.getEntries()[index]
-                                : null);
+                CharSequence summary = index >= 0 ? listPreference.getEntries()[index] : null;
+                CharSequence sanitizedSummary = null;
+                for (int i = 0; i < summary.length(); i++) {
+                    if ((summary.charAt(i) == '(')) {
+                        sanitizedSummary = summary.subSequence(0, i-1);
+                        break;
+                    }
+                }
+                summary = sanitizedSummary != null ? sanitizedSummary : summary;
+                if (summary != null) {
+                    preference.setSummary(summary);
+                }
 
             } else if (preference instanceof RingtonePreference) {
                 // For ringtone preferences, look up the correct display value
@@ -199,21 +205,21 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class AdminPreferenceFragment extends PreferenceFragment {
         private static final int PASSCODE_RESULT = 0;
+        private SharedPreferences prefs;
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_admin);
             setHasOptionsMenu(true);
+            prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
 
             findPreference("admin_restriction").setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
-//                    boolean checked = (boolean)newValue;
-//                    if (checked) {
-                        Intent i = new Intent(getActivity(), PasscodeActivity.class);
-                        startActivityForResult(i, PASSCODE_RESULT);
-//                    }
+                    Intent i = new Intent(getActivity(), PasscodeActivity.class);
+                    startActivityForResult(i, PASSCODE_RESULT);
                     return true;
                 }
             });
@@ -236,11 +242,16 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             switch(requestCode) {
                 case (PASSCODE_RESULT) : {
                     if (resultCode == Activity.RESULT_OK) {
-                        boolean passcodeSuccess = data.getBooleanExtra(getResources().getString(R.string.passcode_set_result), false);
-                        if (!passcodeSuccess) {
-                            PasscodeSwitchPreference psPref = (PasscodeSwitchPreference)findPreference("admin_restriction");
-                            boolean currentSwitchSetting = psPref.isChecked();
-                            psPref.setChecked(!currentSwitchSetting);
+                        boolean passcodeSuccess = data.getBooleanExtra(getResources().getString(R.string.passcode_success), false);
+                        int passcodeAction = data.getIntExtra(getResources().getString(R.string.passcode_action), 99);
+                        PasscodeSwitchPreference psPref = (PasscodeSwitchPreference)findPreference("admin_restriction");
+                        if (passcodeSuccess && passcodeAction == PasscodeActivity.SET) {
+                            psPref.setChecked(true);
+                        }
+                        else if (passcodeSuccess && passcodeAction == PasscodeActivity.VERIFY) {
+                            SharedPreferences.Editor editor = prefs.edit();
+                            editor.remove("user_passcode").commit();
+                            psPref.setChecked(false);
                         }
                     }
                     break;
@@ -255,6 +266,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class GeneralPreferenceFragment extends PreferenceFragment {
+        public static final int LOW = 0;
+        public static final int MED = 1;
+        public static final int HIGH = 2;
+
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -267,6 +282,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // guidelines.
 //            bindPreferenceSummaryToValue(findPreference("screen_orient"));
             bindPreferenceSummaryToValue(findPreference("num_images"));
+            bindPreferenceSummaryToValue(findPreference("audio_quality"));
             bindScreenPreferenceSummary(findPreference("screen_orient"));
         }
 
@@ -318,7 +334,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class DataManagementPreferenceFragment extends PreferenceFragment {
-
+        private SharedPreferences prefs;
         private static final int PASSCODE_RESULT = 0;
 
         @Override
@@ -326,13 +342,13 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_data_mgmt);
             setHasOptionsMenu(true);
+            prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
             findPreference("factory_defaults").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     boolean clickHandled = true;
-                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                    if (prefs.getBoolean("admin_restriction", false) && !prefs.getBoolean("password_prompt", false)) {
+                    if (isPasscodeSet() && !prefs.getBoolean("password_prompt", false)) {
                         ((DialogExPreference)preference).getDialog().dismiss();
                         Intent i = new Intent(getActivity(), PasscodeActivity.class);
                         startActivityForResult(i, PASSCODE_RESULT);
@@ -361,9 +377,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             switch(requestCode) {
                 case (PASSCODE_RESULT) : {
                     if (resultCode == Activity.RESULT_OK) {
-                        boolean passcodeSuccess = data.getBooleanExtra(getResources().getString(R.string.passcode_set_result), false);
+                        boolean passcodeSuccess = data.getBooleanExtra(getResources().getString(R.string.passcode_success), false);
                         if (passcodeSuccess) {
-                            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
                             SharedPreferences.Editor editor = prefs.edit();
                             editor.putBoolean("password_prompt", true).commit();
                             PreferenceScreen screen = (PreferenceScreen)findPreference("data_management_screen");
@@ -374,6 +389,14 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     break;
                 }
             }
+        }
+
+        private boolean isPasscodeSet() {
+            boolean isSet = false;
+            if (prefs != null) {
+                isSet = !(prefs.getString("user_passcode", "")).isEmpty();
+            }
+            return isSet;
         }
     }
 

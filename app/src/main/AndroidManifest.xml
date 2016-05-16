@@ -52,7 +52,9 @@
         <activity
             android:name=".PasscodeActivity"
             android:label="@string/title_activity_passcode"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateVisible|adjustPan">
+        </activity>
     </application>
 
 </manifest>

@@ -40,6 +40,7 @@ import com.scyoung.puzzlemethis.Util.AudioUtil;
 import com.scyoung.puzzlemethis.Util.DateUtil;
 import com.scyoung.puzzlemethis.Util.ImageUtil;
 import com.scyoung.puzzlemethis.Util.StringUtil;
+import static com.scyoung.puzzlemethis.SettingsActivity.GeneralPreferenceFragment.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -511,10 +512,26 @@ public class CategoryBuilder extends AppCompatActivity {
                 "/" + getCategoryButtonName(CURRENT_BUTTON_NAME) + DateUtil.getDateString();
         myAudioRecorder = new MediaRecorder();
         myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
         myAudioRecorder.setOutputFile(CURRENT_BUTTON_OUTPUT_FILE);
         myAudioRecorder.setMaxDuration(10000);
+        int audioQuality = Integer.parseInt(prefs.getString("audio_quality", "0"));
+        if (audioQuality == HIGH) {
+            myAudioRecorder.setAudioSamplingRate(44100);
+            myAudioRecorder.setAudioEncodingBitRate(96000);
+            myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+            myAudioRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+        }
+        else if (audioQuality == MED) {
+            myAudioRecorder.setAudioSamplingRate(16000);
+            myAudioRecorder.setAudioEncodingBitRate(12200);
+            myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+            myAudioRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+        }
+        else {
+            // older version of Android, use crappy sounding voice codec
+            myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+            myAudioRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+        }
 
         try {
             myAudioRecorder.prepare();

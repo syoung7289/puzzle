@@ -19,21 +19,29 @@ public class PasscodeSwitchPreference extends SwitchPreference {
 
     @Override
     public boolean isChecked() {
-//        return isPasscodeSet();
-        return super.isChecked();
+        return isPasscodeSet();
+//        return super.isChecked();
     }
 
-//    @Override
-//    public void setChecked(boolean checked) {
-//        if (checked && isPasscodeSet()) {
-//            super.setChecked(checked);
-//        }
-//        else if (!checked && !isPasscodeSet()) {
-//            super.setChecked(checked);
-//        }
-//    }
+    @Override
+    public void setChecked(boolean checked) {
+        if (checked && isPasscodeSet()) {
+            super.setChecked(checked);
+        }
+        else if (!checked && !isPasscodeSet()) {
+            super.setChecked(checked);
+        }
+    }
 
     private boolean isPasscodeSet() {
-        return !(prefs.getString("user_passcode", "")).isEmpty();
+        boolean isSet = false;
+        if (prefs != null) {
+            isSet = !(prefs.getString("user_passcode", "")).isEmpty();
+        }
+        return isSet;
+    }
+
+    public void markPasscodeSuccess() {
+        setChecked(isPasscodeSet());
     }
 }
