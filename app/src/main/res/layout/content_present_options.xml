@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="3dp"
+    android:paddingRight="3dp"
+    android:gravity="center"
+    android:id="@+id/options_container"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.scyoung.puzzlemethis.PresentOptions"
+    tools:showIn="@layout/activity_present_options">
+    <RelativeLayout
+        android:id="@+id/categoryLayout0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_below="@id/addButton">
+
+        <ImageButton
+            android:id="@+id/categoryButton0"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="0dp"
+            android:longClickable="true"
+            android:transitionName="@string/activity_image_selected"
+            android:scaleType="centerCrop"
+            android:cropToPadding="true"
+            android:adjustViewBounds="true"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/categoryLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/categoryLayout0"
+        android:layout_below="@id/addButton"
+        android:layout_marginTop="5dp">
+
+        <ImageButton
+            android:id="@+id/categoryButton1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="0dp"
+            android:longClickable="true"
+            android:transitionName="@string/activity_image_selected"
+            android:scaleType="centerCrop"
+            android:cropToPadding="true"
+            android:adjustViewBounds="true" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/categoryLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/categoryLayout1"
+        android:layout_marginTop="5dp">
+
+        <ImageButton
+            android:id="@+id/categoryButton2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="0dp"
+            android:longClickable="true"
+            android:layout_below="@id/addButton"
+            android:transitionName="@string/activity_image_selected"
+            android:scaleType="centerCrop"
+            android:cropToPadding="true"
+            android:adjustViewBounds="true" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/categoryLayout3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/categoryLayout0"
+        android:layout_marginLeft="5dp">
+
+        <ImageButton
+            android:id="@+id/categoryButton3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="0dp"
+            android:longClickable="true"
+            android:transitionName="@string/activity_image_selected"
+            android:scaleType="centerCrop"
+            android:cropToPadding="true"
+            android:adjustViewBounds="true" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/categoryLayout4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/categoryLayout0"
+        android:layout_toRightOf="@id/categoryLayout3">
+
+        <ImageButton
+            android:id="@+id/categoryButton4"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="0dp"
+            android:longClickable="true"
+            android:transitionName="@string/activity_image_selected"
+            android:scaleType="centerCrop"
+            android:cropToPadding="true"
+            android:adjustViewBounds="true" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/categoryLayout5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/categoryLayout0"
+        android:layout_toRightOf="@id/categoryLayout4">
+
+        <ImageButton
+            android:id="@+id/categoryButton5"
+            android:layout_width="00dp"
+            android:layout_height="00dp"
+            android:padding="0dp"
+            android:longClickable="true"
+            android:transitionName="@string/activity_image_selected"
+            android:scaleType="centerCrop"
+            android:cropToPadding="true"
+            android:adjustViewBounds="true" />
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -17,4 +17,25 @@
         <item name="android:fontFamily">sans-serif</item>
     </style>
 
+    <style name="CustomCheckBox">
+        <item name="android:theme">@style/CheckBoxAppTheme</item>
+    </style>
+
+    <style name="CheckBoxAppTheme">
+        <item name="android:colorAccent">
+            @color/cbFillColorInCheckedState
+        </item>
+        <item name="android:colorControlNormal">
+            @color/colorSecondaryPurple
+        </item>
+        <item name="android:colorControlActivated">
+            @color/colorSecondaryPurple
+        </item>
+        <item name="android:colorControlHighlight">@color/blueAccentBorder</item>
+        <item name="android:fillColor">
+            @color/cbFillColorInCheckedState
+        </item>
+    </style>
+
+
 </resources>

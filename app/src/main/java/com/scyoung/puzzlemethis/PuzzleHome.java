@@ -1,13 +1,11 @@
 package com.scyoung.puzzlemethis;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
@@ -18,9 +16,11 @@ import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
+
 import com.scyoung.puzzlemethis.Util.ImageUtil;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class PuzzleHome extends AppCompatActivity implements CategoryFragment.OnFragmentInteractionListener, MixAndMatchFragment.OnFragmentInteractionListener {
@@ -47,9 +47,7 @@ public class PuzzleHome extends AppCompatActivity implements CategoryFragment.On
 
         //flushPreferences();
 
-        if (savedInstanceState != null) {
-            showMixAndMatch = savedInstanceState.getBoolean("showMixAndMatch", false);
-        }
+        showMixAndMatch = prefs.getBoolean("isMixAndMatch", false);
 
         // Load first fragment
         if (showMixAndMatch) {
@@ -93,8 +91,10 @@ public class PuzzleHome extends AppCompatActivity implements CategoryFragment.On
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-
-        outState.putBoolean("showMixAndMatch", findViewById(R.id.mixAndMatchButton).isActivated());
+        boolean isMixAndMatch = findViewById(R.id.mixAndMatchButton).isActivated();
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean("isMixAndMatch", isMixAndMatch);
+        editor.commit();
         super.onSaveInstanceState(outState);
     }
 
@@ -136,11 +136,6 @@ public class PuzzleHome extends AppCompatActivity implements CategoryFragment.On
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
-
-    @Override
     public void onCategorySelected(String categoryName) {
         Log.d("PuzAct", "Inside onCategorySelected and " + categoryName + " was passed");
         Intent intent = new Intent(this, CategoryBuilder.class);
@@ -171,45 +166,12 @@ public class PuzzleHome extends AppCompatActivity implements CategoryFragment.On
     public void setPreferences(View view) {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
-//        Intent i = new Intent(this,PasscodeActivity.class);
-//        startActivityForResult(i, PASSCODE_RESULT);
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch(requestCode) {
-            case (PASSCODE_RESULT) : {
-                if (resultCode == Activity.RESULT_OK) {
-                    boolean passcodeSuccess = data.getBooleanExtra(getResources().getString(R.string.passcode_success), false);
-                }
-                break;
-            }
-        }
+    public void onMixAndMatchPresent(ArrayList<String> mixAndMatchList) {
+        Intent intent = new Intent(this, PresentOptions.class);
+        intent.putStringArrayListExtra((getResources().getString(R.string.options_to_present)), mixAndMatchList);
+        startActivity(intent);
     }
-
-    public void flushPreferences() {
-        Map<String, ?> allEntries = prefs.getAll();
-        SharedPreferences.Editor editor = prefs.edit();
-        for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
-            if (entry.getKey().contains("~")) {
-                deleteSharedPreferenceFile((String) entry.getValue());
-            }
-            editor.remove(entry.getKey());
-        }
-        editor.commit();
-        Log.d("Flushed Preferences: ", "complete");
-        initPreferences();
-    }
-
-    private void deleteSharedPreferenceFile(String fileName) {
-        try {
-            File imageFile = new File(fileName);
-            imageFile.delete();
-        }
-        catch (Exception e) {
-            // didn't exist keep going
-        }
-    }
-
 }

@@ -81,12 +81,12 @@ public class CategoryBuilder extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_category_builder);
+
         int rotation = this.getWindow().getWindowManager().getDefaultDisplay().getRotation();
         SCREEN_ORIENTATION = ((rotation == Surface.ROTATION_90 || rotation == Surface.ROTATION_270) ? "LANDSCAPE" : "PORTRAIT");
         setDisplayDimensions();
         Log.d("CA", "onCreate started: " + SCREEN_ORIENTATION);
-        setContentView(R.layout.activity_category_builder);
-
         if (savedInstanceState != null) {
             passedCategory = savedInstanceState.getString("passedCategory", "");
         }
@@ -106,7 +106,6 @@ public class CategoryBuilder extends AppCompatActivity {
 
         shouldRedraw = false;
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
-//        prefs = getSharedPreferences(getString(R.string.preference_file), MODE_PRIVATE);
         res = getResources();
         container = (RelativeLayout) findViewById(R.id.category_container);
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
@@ -218,7 +217,6 @@ public class CategoryBuilder extends AppCompatActivity {
         buttonIndicators[4] = (ImageView) findViewById(R.id.categoryButton4_indicator);
         buttonIndicators[5] = (ImageView) findViewById(R.id.categoryButton5_indicator);
     }
-
 
     private void initButtonVisibility() {
         int numInitialButtons = Integer.parseInt(prefs.getString("num_images", "2"));

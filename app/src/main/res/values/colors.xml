@@ -6,15 +6,26 @@
     <color name="colorAccent">#ba7c00</color>
     <color name="colorPrimaryTransparent">#cc291d03</color>
 
-    <color name="colorPrimaryGradientStart">#169db7</color>
-    <color name="colorPrimaryGradientCenter">#4C9FAF</color>
-    <color name="colorPrimaryGradientEnd">#6BAAB6</color>
-    <color name="colorPrimaryBorder">#107a8e</color>
+    <color name="blueGradientStart">#169db7</color>
+    <color name="blueGradientCenter">#4C9FAF</color>
+    <color name="blueGradientEnd">#6BAAB6</color>
+    <color name="bluePrimaryBorder">#107a8e</color>
 
-    <color name="colorAccentGradientStart">#0a505e</color>
-    <color name="colorAccentGradientCenter">#37727e</color>
-    <color name="colorAccentGradientEnd">#4b7981</color>
-    <color name="colorAccentBorder">#0b4c58</color>
+    <color name="blueAccentGradientStart">#0a505e</color>
+    <color name="blueAccentGradientCenter">#37727e</color>
+    <color name="blueAccentGradientEnd">#4b7981</color>
+    <color name="blueAccentBorder">#0b4c58</color>
+
+    <color name="purpleGradientStart">#7a4a9e</color>
+    <color name="purpleGradientCenter">#7030A0</color>
+    <color name="purpleGradientEnd">#65189E</color>
+    <color name="purplePrimaryBorder">#420f68</color>
+
+    <color name="purpleActiveGradientStart">#643c81</color>
+    <color name="purpleActiveGradientCenter">#58267e</color>
+    <color name="purpleActiveGradientEnd">#4c1278</color>
+    <color name="purpleActiveAccentBorder">#420f68</color>
+
 
     <color name="colorSecondaryRed">#C00000</color>
     <color name="colorSecondaryGreen">#70AD47</color>
@@ -27,4 +38,7 @@
     <color name="colorDisabledCenter">#545454</color>
     <color name="colorDisabledEnd">#494949</color>
     <color name="colorDisabledBorder">#2b2b2b</color>
+
+    <color name="cbFillColorInCheckedState">#fff</color>
+    <color name="lightBlue">#91c3cc</color>
 </resources>

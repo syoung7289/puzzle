@@ -2,12 +2,51 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.scyoung.puzzlemethis.MixAndMatchFragment">
+    tools:context="com.scyoung.puzzlemethis.MixAndMatchFragment"
+    android:padding="10dp">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_mix_and_match_fragment" />
+        android:background="@color/lightBlue">
+
+        <TextView
+            android:id="@+id/mixAndMatchTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/blue_text_view_gradient"
+            android:padding="15dp"
+            android:text="@string/select_up_to_six"
+            android:textAppearance="@style/ButtonMediumFontStyle"
+            android:layout_margin="10dp"
+            android:gravity="center_horizontal"
+            android:textColor="#fff" />
+
+        <Button
+            android:id="@+id/presentOptionsButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/options_button"
+            android:textColor="@color/button_text"
+            android:textAppearance="@style/ButtonMediumFontStyle"
+            android:text="@string/present_options"
+            android:enabled="false"
+            android:padding="10dp"
+            android:layout_margin="10dp"/>
+
+        <ListView
+            android:id="@+id/mixAndMatchList"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_below="@id/mixAndMatchTitle"
+            android:layout_above="@id/presentOptionsButton"
+            android:background="@color/lightBlue"
+            android:layout_gravity="center" />
+
+    </RelativeLayout>
 
 </FrameLayout>

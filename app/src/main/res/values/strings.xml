@@ -99,5 +99,9 @@
     <string name="reenter_passcode">Verify your Passcode</string>
     <string name="passcodes_dont_match">Passcodes do not match</string>
     <string name="passcode_doesnt_match">Passcode does not match saved passcode</string>
+    <string name="select_up_to_six"><![CDATA[Mix & Match up to 6]]></string>
+    <string name="present_options">Present Options</string>
+    <string name="title_activity_present_options">"Choose Option"</string>
+    <string name="options_to_present">options_to_present</string>
 
 </resources>

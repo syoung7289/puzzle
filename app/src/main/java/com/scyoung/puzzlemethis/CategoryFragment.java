@@ -41,7 +41,6 @@ public class CategoryFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-//        prefs = getActivity().getSharedPreferences(getString(R.string.preference_file), Context.MODE_PRIVATE);
         Log.d("FRAG", "onCreate");
     }
 

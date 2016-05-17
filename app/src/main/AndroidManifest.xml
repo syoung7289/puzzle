@@ -53,8 +53,11 @@
             android:name=".PasscodeActivity"
             android:label="@string/title_activity_passcode"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateVisible|adjustPan">
-        </activity>
+            android:windowSoftInputMode="stateVisible|adjustPan"></activity>
+        <activity
+            android:name=".PresentOptions"
+            android:label="@string/title_activity_present_options"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
