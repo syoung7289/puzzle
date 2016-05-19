@@ -104,4 +104,33 @@
     <string name="title_activity_present_options">"Choose Option"</string>
     <string name="options_to_present">options_to_present</string>
 
+    <array name="colorNumberList">
+        <item>@color/Brown</item>
+        <item>@color/CadetBlue</item>
+        <item>@color/Chocolate</item>
+        <item>@color/CornflowerBlue</item>
+        <item>@color/DarkGoldenrod</item>
+        <item>@color/DarkSeaGreen</item>
+        <item>@color/DarkSlateBlue</item>
+        <item>@color/Goldenrod</item>
+        <item>@color/IndianRed</item>
+        <item>@color/LimeGreen</item>
+        <item>@color/MediumOrchid</item>
+        <item>@color/MediumPurple</item>
+        <item>@color/MediumVioletRed</item>
+        <item>@color/OldGold</item>
+        <item>@color/Olive</item>
+        <item>@color/Orange</item>
+        <item>@color/OrangeRed</item>
+        <item>@color/RoyalBlue</item>
+        <item>@color/SeaGreen</item>
+        <item>@color/Sienna</item>
+        <item>@color/SlateBlue</item>
+        <item>@color/SteelBlue</item>
+        <item>@color/Teal</item>
+        <item>@color/Tomato</item>
+        <item>@color/Violet</item>
+        <item>@color/YellowGreen</item>
+    </array>
+
 </resources>

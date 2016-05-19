@@ -34,6 +34,36 @@
     <color name="colorSecondaryYellow">#FBC608</color>
     <color name="colorSecondaryBlue">#4C9FAF</color>
 
+    <color name="colorSecondaryPurpleTransparent">#b37030a0</color>
+
+
+    <color name="Brown">#caa52a2a</color>
+    <color name="CadetBlue">#CA5F9EA0</color>
+    <color name="Chocolate">#CAD2691E</color>
+    <color name="CornflowerBlue">#CA6495ED</color>
+    <color name="DarkGoldenrod">#CAB8860B</color>
+    <color name="DarkSeaGreen">#CA8FBC8F</color>
+    <color name="DarkSlateBlue">#CA483D8B</color>
+    <color name="Goldenrod">#CADAA520</color>
+    <color name="IndianRed">#CACD5C5C</color>
+    <color name="LimeGreen">#CA32CD32</color>
+    <color name="MediumOrchid">#CABA55D3</color>
+    <color name="MediumPurple">#CA9370DB</color>
+    <color name="MediumVioletRed">#CAC71585</color>
+    <color name="OldGold">#CACFB53B</color>
+    <color name="Olive">#CA808000</color>
+    <color name="Orange">#CAFFA500</color>
+    <color name="OrangeRed">#CAFF4500</color>
+    <color name="RoyalBlue">#CA4169E1</color>
+    <color name="SeaGreen">#CA2E8B57</color>
+    <color name="Sienna">#CAA0522D</color>
+    <color name="SlateBlue">#CA6A5ACD</color>
+    <color name="SteelBlue">#CA4682B4</color>
+    <color name="Teal">#CA008080</color>
+    <color name="Tomato">#CAFF6347</color>
+    <color name="Violet">#CAEE82EE</color>
+    <color name="YellowGreen">#CA9ACD32</color>
+
     <color name="colorDisabledStart">#8e8e8e</color>
     <color name="colorDisabledCenter">#545454</color>
     <color name="colorDisabledEnd">#494949</color>
