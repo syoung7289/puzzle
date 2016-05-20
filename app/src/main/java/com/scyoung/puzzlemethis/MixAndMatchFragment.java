@@ -122,16 +122,17 @@ public class MixAndMatchFragment extends Fragment {
             else {
                 holder = (ViewHolder) convertView.getTag();
             }
-            MixAndMatchImageItem mixAndMatchImageItem = mixAndMatchList.get(position);
-            String category = mixAndMatchImageItem.getCategory();
-            holder.category.setText(category);
-            if (!lastCategory.equals(category)) {
-                colorIndex = colorIndex < arrayMax - 1 ? colorIndex + 1 : 0;
+            if (!isImageSet(holder.fileLocation)) {
+                MixAndMatchImageItem mixAndMatchImageItem = mixAndMatchList.get(position);
+                setupCategoryView(mixAndMatchImageItem, holder);
+                setupCheckBoxView(mixAndMatchImageItem, holder);
+                setupImageButton(mixAndMatchImageItem, holder);
+                mixAndMatchImageItem.setOverlay(holder.overlay);
             }
-            holder.category.setBackgroundColor(colorNumberArray[colorIndex]);
-            lastCategory = category;
-            holder.name.setChecked(mixAndMatchImageItem.isSelected());
-            holder.name.setTag(mixAndMatchImageItem);
+            return convertView;
+        }
+
+        private void setupImageButton(MixAndMatchImageItem mixAndMatchImageItem, ViewHolder holder) {
             String fileLocation = prefs.getString(mixAndMatchImageItem.getImageFileKey(), null);
             ImageButton imageButton = holder.fileLocation;
             if (fileLocation != null && !(imageButton.getBackground() instanceof ColorDrawable)) {
@@ -144,26 +145,28 @@ public class MixAndMatchFragment extends Fragment {
             holder.fileLocation.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CheckBox cb = (CheckBox)v.getTag();
-                    MixAndMatchImageItem mixAndMatchItem = (MixAndMatchImageItem)cb.getTag();
+                    CheckBox cb = (CheckBox) v.getTag();
+                    MixAndMatchImageItem mixAndMatchItem = (MixAndMatchImageItem) cb.getTag();
                     cb.setChecked(!mixAndMatchItem.isSelected());
                 }
             });
-            mixAndMatchImageItem.setOverlay(holder.overlay);
+        }
 
-            holder.name.setOnCheckedChangeListener( new CheckBox.OnCheckedChangeListener() {
+        private void setupCheckBoxView(MixAndMatchImageItem mixAndMatchImageItem, ViewHolder holder) {
+            holder.name.setChecked(mixAndMatchImageItem.isSelected());
+            holder.name.setTag(mixAndMatchImageItem);
+            holder.name.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     MixAndMatchImageItem mixAndMatchImageItem = (MixAndMatchImageItem) buttonView.getTag();
                     if (isChecked && selectedItems >= 6) {
                         //reverse checkbox selection
                         buttonView.setChecked(false);
-                    }
-                    else {
+                    } else {
                         // manage MixAndMatchItem
                         if (isChecked) {
                             selectedItems++;
-                        } else  {
+                        } else {
                             selectedItems = selectedItems > 0 ? selectedItems - 1 : selectedItems;
                         }
                         mixAndMatchImageItem.setSelected(isChecked);
@@ -173,7 +176,20 @@ public class MixAndMatchFragment extends Fragment {
                     getActivity().findViewById(R.id.presentOptionsButton).setEnabled(selectedItems > 1);
                 }
             });
-            return convertView;
+        }
+
+        private void setupCategoryView(MixAndMatchImageItem mixAndMatchImageItem, ViewHolder holder) {
+            String category = mixAndMatchImageItem.getCategory();
+            holder.category.setText(category);
+            if (!lastCategory.equals(category)) {
+                colorIndex = colorIndex < arrayMax - 1 ? colorIndex + 1 : 0;
+            }
+            holder.category.setBackgroundColor(colorNumberArray[colorIndex]);
+            lastCategory = category;
+        }
+
+        private boolean isImageSet(ImageView view) {
+            return view.getBackground() instanceof ColorDrawable;
         }
     }
 

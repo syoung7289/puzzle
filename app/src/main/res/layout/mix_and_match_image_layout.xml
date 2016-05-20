@@ -49,10 +49,7 @@
             android:focusableInTouchMode="false"
             android:clickable="false"
             android:layout_centerInParent="true"
-            android:background="@drawable/beveled_edge"
-            android:foregroundTint="@color/colorSecondaryPurple"
-            android:foregroundTintMode="add"
-            android:tint="@color/colorSecondaryPurple"
+            android:background="@drawable/beveled_edge_gradient"
             android:visibility="invisible"/>
         <ProgressBar
             android:id="@+id/mixAndMatchProgressBar"
