@@ -14,19 +14,17 @@
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
+        android:src="@drawable/puzzle_pieces_white_corner"
         android:scaleType="centerCrop"
         android:cropToPadding="true"
         android:adjustViewBounds="true" />
 
     <ImageView
-        android:layout_width="230dp"
-        android:layout_height="80dp"
+        android:layout_width="210dp"
+        android:layout_height="51dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:padding="15dp"
-        android:scaleType="centerCrop"
-        android:cropToPadding="true"
-        android:adjustViewBounds="true"
+        android:layout_margin="10dp"
         android:src="@drawable/puzzle_me_this_text"
         android:id="@+id/imageView" />
 
@@ -47,7 +45,7 @@
 
         <ImageButton
             android:id="@+id/categoriesButton"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/categories_menuitem_states"
             android:background="@android:color/transparent"

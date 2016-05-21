@@ -60,21 +60,21 @@ public class PuzzleHome extends AppCompatActivity implements CategoryFragment.On
         initPreferences();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        Bitmap background = ImageUtil.getScaledBitmapFromResources(R.drawable.puzzle_pieces_white_corner, size.x, size.y, this);
-        container.setImageBitmap(background);
-    }
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+    //        Display display = getWindowManager().getDefaultDisplay();
+    //        Point size = new Point();
+    //        display.getSize(size);
+    //        Bitmap background = ImageUtil.getScaledBitmapFromResources(R.drawable.puzzle_pieces_white_corner, size.x, size.y, this);
+    //        container.setImageBitmap(background);
+//    }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        container.setImageResource(0);
-    }
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//        container.setImageResource(0);
+//    }
 
     @Override
     protected void onResume() {
