@@ -4,239 +4,255 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="3dp"
-    android:paddingRight="3dp"
-    android:gravity="center"
-    android:id="@+id/category_container"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.scyoung.puzzlemethis.CategoryBuilder"
     tools:showIn="@layout/activity_category_builder">
 
-    <RelativeLayout
-        android:id="@+id/categoryLayout0"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_below="@id/addButton">
-
-        <ImageButton
-            android:id="@+id/categoryButton0"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:padding="0dp"
-            android:longClickable="true"
-            android:transitionName="@string/activity_image_selected"
-            android:scaleType="centerCrop"
-            android:cropToPadding="true"
-            android:adjustViewBounds="true"/>
-            <ImageView
-                android:id="@+id/categoryButton0_indicator"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignBottom="@id/categoryButton0"
-                android:layout_alignRight="@id/categoryButton0"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                android:visibility="gone"
-                android:cropToPadding="true" />
-            <ProgressBar
-                android:id="@+id/progressButton0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:visibility="gone"/>
-    </RelativeLayout>
+    <ImageView
+        android:id="@+id/image_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/puzzle_pieces_white_light"
+        android:scaleType="centerCrop"
+        android:cropToPadding="true"
+        android:adjustViewBounds="true" />
 
     <RelativeLayout
-        android:id="@+id/categoryLayout1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/categoryLayout0"
-        android:layout_below="@id/addButton"
-        android:layout_marginTop="5dp">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="3dp"
+        android:paddingRight="3dp"
+        android:gravity="center"
+        android:id="@+id/category_container">
 
-        <ImageButton
-            android:id="@+id/categoryButton1"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:padding="0dp"
-            android:longClickable="true"
-            android:transitionName="@string/activity_image_selected"
-            android:scaleType="centerCrop"
-            android:cropToPadding="true"
-            android:adjustViewBounds="true" />
-            <ImageView
-                android:id="@+id/categoryButton1_indicator"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignBottom="@id/categoryButton1"
-                android:layout_alignRight="@id/categoryButton1"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                android:visibility="gone"
-                android:cropToPadding="true" />
-            <ProgressBar
-                android:id="@+id/progressButton1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:visibility="gone"/>
-    </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/categoryLayout0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_below="@id/addButton">
 
-    <RelativeLayout
-        android:id="@+id/categoryLayout2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/categoryLayout1"
-        android:layout_marginTop="5dp">
+            <ImageButton
+                android:id="@+id/categoryButton0"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:padding="0dp"
+                android:longClickable="true"
+                android:transitionName="@string/activity_image_selected"
+                android:scaleType="centerCrop"
+                android:cropToPadding="true"
+                android:adjustViewBounds="true"/>
+                <ImageView
+                    android:id="@+id/categoryButton0_indicator"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignBottom="@id/categoryButton0"
+                    android:layout_alignRight="@id/categoryButton0"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@android:color/transparent"
+                    android:scaleType="fitCenter"
+                    android:visibility="gone"
+                    android:cropToPadding="true" />
+                <ProgressBar
+                    android:id="@+id/progressButton0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:visibility="gone"/>
+        </RelativeLayout>
 
-        <ImageButton
-            android:id="@+id/categoryButton2"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:padding="0dp"
-            android:longClickable="true"
+        <RelativeLayout
+            android:id="@+id/categoryLayout1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/categoryLayout0"
             android:layout_below="@id/addButton"
-            android:transitionName="@string/activity_image_selected"
-            android:scaleType="centerCrop"
-            android:cropToPadding="true"
-            android:adjustViewBounds="true" />
-            <ImageView
-                android:id="@+id/categoryButton2_indicator"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignBottom="@id/categoryButton2"
-                android:layout_alignRight="@id/categoryButton2"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                android:visibility="gone"
-                android:cropToPadding="true" />
-            <ProgressBar
-                android:id="@+id/progressButton2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:visibility="gone"/>
-    </RelativeLayout>
+            android:layout_marginTop="5dp">
 
-    <RelativeLayout
-        android:id="@+id/categoryLayout3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/categoryLayout0"
-        android:layout_marginLeft="5dp">
+            <ImageButton
+                android:id="@+id/categoryButton1"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:padding="0dp"
+                android:longClickable="true"
+                android:transitionName="@string/activity_image_selected"
+                android:scaleType="centerCrop"
+                android:cropToPadding="true"
+                android:adjustViewBounds="true" />
+                <ImageView
+                    android:id="@+id/categoryButton1_indicator"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignBottom="@id/categoryButton1"
+                    android:layout_alignRight="@id/categoryButton1"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@android:color/transparent"
+                    android:scaleType="fitCenter"
+                    android:visibility="gone"
+                    android:cropToPadding="true" />
+                <ProgressBar
+                    android:id="@+id/progressButton1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:visibility="gone"/>
+        </RelativeLayout>
 
-        <ImageButton
-            android:id="@+id/categoryButton3"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:padding="0dp"
-            android:longClickable="true"
-            android:transitionName="@string/activity_image_selected"
-            android:scaleType="centerCrop"
-            android:cropToPadding="true"
-            android:adjustViewBounds="true" />
-            <ImageView
-                android:id="@+id/categoryButton3_indicator"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignBottom="@id/categoryButton3"
-                android:layout_alignRight="@id/categoryButton3"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                android:visibility="gone"
-                android:cropToPadding="true" />
-            <ProgressBar
-                android:id="@+id/progressButton3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:visibility="gone"/>
-    </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/categoryLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/categoryLayout1"
+            android:layout_marginTop="5dp">
 
-    <RelativeLayout
-        android:id="@+id/categoryLayout4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/categoryLayout0"
-        android:layout_toRightOf="@id/categoryLayout3">
+            <ImageButton
+                android:id="@+id/categoryButton2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:padding="0dp"
+                android:longClickable="true"
+                android:layout_below="@id/addButton"
+                android:transitionName="@string/activity_image_selected"
+                android:scaleType="centerCrop"
+                android:cropToPadding="true"
+                android:adjustViewBounds="true" />
+                <ImageView
+                    android:id="@+id/categoryButton2_indicator"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignBottom="@id/categoryButton2"
+                    android:layout_alignRight="@id/categoryButton2"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@android:color/transparent"
+                    android:scaleType="fitCenter"
+                    android:visibility="gone"
+                    android:cropToPadding="true" />
+                <ProgressBar
+                    android:id="@+id/progressButton2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:visibility="gone"/>
+        </RelativeLayout>
 
-        <ImageButton
-            android:id="@+id/categoryButton4"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:padding="0dp"
-            android:longClickable="true"
-            android:transitionName="@string/activity_image_selected"
-            android:scaleType="centerCrop"
-            android:cropToPadding="true"
-            android:adjustViewBounds="true" />
-            <ImageView
-                android:id="@+id/categoryButton4_indicator"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignBottom="@id/categoryButton4"
-                android:layout_alignRight="@id/categoryButton4"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                android:visibility="gone"
-                android:cropToPadding="true" />
-            <ProgressBar
-                android:id="@+id/progressButton4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:visibility="gone"/>
-    </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/categoryLayout3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/categoryLayout0"
+            android:layout_marginLeft="5dp">
+
+            <ImageButton
+                android:id="@+id/categoryButton3"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:padding="0dp"
+                android:longClickable="true"
+                android:transitionName="@string/activity_image_selected"
+                android:scaleType="centerCrop"
+                android:cropToPadding="true"
+                android:adjustViewBounds="true" />
+                <ImageView
+                    android:id="@+id/categoryButton3_indicator"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignBottom="@id/categoryButton3"
+                    android:layout_alignRight="@id/categoryButton3"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@android:color/transparent"
+                    android:scaleType="fitCenter"
+                    android:visibility="gone"
+                    android:cropToPadding="true" />
+                <ProgressBar
+                    android:id="@+id/progressButton3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:visibility="gone"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/categoryLayout4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/categoryLayout0"
+            android:layout_toRightOf="@id/categoryLayout3">
+
+            <ImageButton
+                android:id="@+id/categoryButton4"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:padding="0dp"
+                android:longClickable="true"
+                android:transitionName="@string/activity_image_selected"
+                android:scaleType="centerCrop"
+                android:cropToPadding="true"
+                android:adjustViewBounds="true" />
+                <ImageView
+                    android:id="@+id/categoryButton4_indicator"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignBottom="@id/categoryButton4"
+                    android:layout_alignRight="@id/categoryButton4"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@android:color/transparent"
+                    android:scaleType="fitCenter"
+                    android:visibility="gone"
+                    android:cropToPadding="true" />
+                <ProgressBar
+                    android:id="@+id/progressButton4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:visibility="gone"/>
+        </RelativeLayout>
 
 
-    <RelativeLayout
-        android:id="@+id/categoryLayout5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/categoryLayout0"
-        android:layout_toRightOf="@id/categoryLayout4">
+        <RelativeLayout
+            android:id="@+id/categoryLayout5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/categoryLayout0"
+            android:layout_toRightOf="@id/categoryLayout4">
 
-        <ImageButton
-            android:id="@+id/categoryButton5"
-            android:layout_width="00dp"
-            android:layout_height="00dp"
-            android:padding="0dp"
-            android:longClickable="true"
-            android:transitionName="@string/activity_image_selected"
-            android:scaleType="centerCrop"
-            android:cropToPadding="true"
-            android:adjustViewBounds="true" />
-            <ImageView
-                android:id="@+id/categoryButton5_indicator"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignBottom="@id/categoryButton5"
-                android:layout_alignRight="@id/categoryButton5"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                android:visibility="gone"
-                android:cropToPadding="true" />
-            <ProgressBar
-                android:id="@+id/progressButton5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:visibility="gone"/>
+            <ImageButton
+                android:id="@+id/categoryButton5"
+                android:layout_width="00dp"
+                android:layout_height="00dp"
+                android:padding="0dp"
+                android:longClickable="true"
+                android:transitionName="@string/activity_image_selected"
+                android:scaleType="centerCrop"
+                android:cropToPadding="true"
+                android:adjustViewBounds="true" />
+                <ImageView
+                    android:id="@+id/categoryButton5_indicator"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignBottom="@id/categoryButton5"
+                    android:layout_alignRight="@id/categoryButton5"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@android:color/transparent"
+                    android:scaleType="fitCenter"
+                    android:visibility="gone"
+                    android:cropToPadding="true" />
+                <ProgressBar
+                    android:id="@+id/progressButton5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:visibility="gone"/>
+        </RelativeLayout>
     </RelativeLayout>
 
 </RelativeLayout>
