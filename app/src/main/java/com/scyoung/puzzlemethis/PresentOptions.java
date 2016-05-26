@@ -110,6 +110,7 @@ public class PresentOptions extends AppCompatActivity {
 
     public void buildButtons() {
         initButtonArray();
+        int maxButtonSide = getMinimumButtonDimension();
         Log.d("buildButton", "starting at " + (new Date()).toString());
 
         for (int i = 0; i < optionsToPresent.size(); i++) {
@@ -119,7 +120,6 @@ public class PresentOptions extends AppCompatActivity {
             viewButtons[i].setTag(optionsToPresent.get(i));
             String imageLocation = prefs.getString(optionsToPresent.get(i), null);
             Uri imageUri = imageLocation != null ? Uri.parse(imageLocation) : null;
-            int maxButtonSide = getMinimumButtonDimension();
 
             Log.d("buildButton", "before setScaled for loop " + i +  " at " + (new Date()).toString());
             viewButtons[i].setImageBitmap(
@@ -219,8 +219,8 @@ public class PresentOptions extends AppCompatActivity {
     };
 
     private int getMinimumButtonDimension() {
-        int numInitialButtons = optionsToPresent.size();
-        return Math.min(DISPLAY_HEIGHT / numInitialButtons, DISPLAY_WIDTH / numInitialButtons);
+        int maxButtonIndex = optionsToPresent.size() - 1;
+        return Math.min(DISPLAY_HEIGHT / getNumRows(maxButtonIndex), DISPLAY_WIDTH / getNumColumns(maxButtonIndex));
     }
 
     public int getLastVisibleIndex() {

@@ -1,11 +1,12 @@
 package com.scyoung.puzzlemethis;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
@@ -13,10 +14,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
-import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.scyoung.puzzlemethis.Util.AppUtil;
 import com.scyoung.puzzlemethis.Util.ImageUtil;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -45,8 +46,6 @@ public class PuzzleHome extends AppCompatActivity implements CategoryFragment.On
 
         Log.d("PuzHome", "Internal filesystem free space" + Long.toString(this.getFilesDir().getFreeSpace()));
 
-        //flushPreferences();
-
         showMixAndMatch = prefs.getBoolean("isMixAndMatch", false);
 
         // Load first fragment
@@ -59,22 +58,6 @@ public class PuzzleHome extends AppCompatActivity implements CategoryFragment.On
 
         initPreferences();
     }
-
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-    //        Display display = getWindowManager().getDefaultDisplay();
-    //        Point size = new Point();
-    //        display.getSize(size);
-    //        Bitmap background = ImageUtil.getScaledBitmapFromResources(R.drawable.puzzle_pieces_white_corner, size.x, size.y, this);
-    //        container.setImageBitmap(background);
-//    }
-
-//    @Override
-//    protected void onStop() {
-//        super.onStop();
-//        container.setImageResource(0);
-//    }
 
     @Override
     protected void onResume() {
@@ -174,4 +157,5 @@ public class PuzzleHome extends AppCompatActivity implements CategoryFragment.On
         intent.putStringArrayListExtra((getResources().getString(R.string.options_to_present)), mixAndMatchList);
         startActivity(intent);
     }
+
 }

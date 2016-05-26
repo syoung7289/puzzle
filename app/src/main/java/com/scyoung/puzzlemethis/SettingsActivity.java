@@ -25,6 +25,7 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
 
+import com.scyoung.puzzlemethis.Util.AppUtil;
 import com.scyoung.puzzlemethis.preference.DialogExPreference;
 import com.scyoung.puzzlemethis.preference.PasscodeSwitchPreference;
 
@@ -175,7 +176,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
      */
     @Override
     public boolean onIsMultiPane() {
-        return isXLargeTablet(this);
+        return AppUtil.isTablet(this);
     }
 
     /**
@@ -229,7 +230,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
-            if (id == android.R.id.home) {
+            if (id == android.R.id.home && !isXLargeTablet(getActivity())) {
                 startActivity(new Intent(getActivity(), SettingsActivity.class));
                 return true;
             }
@@ -320,7 +321,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
-            if (id == android.R.id.home) {
+            if (id == android.R.id.home && !isXLargeTablet(getActivity())) {
                 startActivity(new Intent(getActivity(), SettingsActivity.class));
                 return true;
             }
@@ -364,7 +365,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
-            if (id == android.R.id.home) {
+            if (id == android.R.id.home && !isXLargeTablet(getActivity())) {
                 startActivity(new Intent(getActivity(), SettingsActivity.class));
                 return true;
             }

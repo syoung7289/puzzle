@@ -22,9 +22,10 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="3dp"
-        android:paddingRight="3dp"
         android:gravity="center"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="3dp"
+        android:background="@android:color/transparent"
         android:id="@+id/category_container">
 
         <RelativeLayout
@@ -32,8 +33,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="5dp"
             android:layout_below="@id/addButton">
 
             <ImageButton
@@ -71,8 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/categoryLayout0"
-            android:layout_below="@id/addButton"
-            android:layout_marginTop="5dp">
+            android:layout_below="@id/addButton">
 
             <ImageButton
                 android:id="@+id/categoryButton1"
@@ -108,8 +106,7 @@
             android:id="@+id/categoryLayout2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/categoryLayout1"
-            android:layout_marginTop="5dp">
+            android:layout_toRightOf="@id/categoryLayout1">
 
             <ImageButton
                 android:id="@+id/categoryButton2"
@@ -146,8 +143,7 @@
             android:id="@+id/categoryLayout3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/categoryLayout0"
-            android:layout_marginLeft="5dp">
+            android:layout_below="@id/categoryLayout0">
 
             <ImageButton
                 android:id="@+id/categoryButton3"

@@ -340,6 +340,7 @@ public class CategoryBuilder extends AppCompatActivity {
         ImageView indicator = buttonIndicators[getButtonIndex(button.getId())];
         if (on) {
             button.setAlpha(0.5f);
+            ((RelativeLayout)button.getParent()).setBackgroundColor(Color.parseColor("#FFFFFF"));
             indicator.setVisibility(View.VISIBLE);
             indicator.setBackgroundResource(R.drawable.rec_animation);
             AnimationDrawable background = (AnimationDrawable) indicator.getBackground();
@@ -347,6 +348,7 @@ public class CategoryBuilder extends AppCompatActivity {
         }
         else {
             button.setAlpha(1f);
+            ((RelativeLayout)button.getParent()).setBackgroundResource(0);
             indicator.setVisibility(View.GONE);
             indicator.setBackgroundResource(0);
         }

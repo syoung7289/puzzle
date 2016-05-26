@@ -25,6 +25,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.scyoung.puzzlemethis.Util.AppUtil;
 import com.scyoung.puzzlemethis.Util.ImageUtil;
 import com.scyoung.puzzlemethis.Util.StringUtil;
 import com.scyoung.puzzlemethis.container.MixAndMatchImageItem;
@@ -56,7 +57,7 @@ public class MixAndMatchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_mix_and_match, container, false);
+        View view = inflater.inflate(R.layout.fragment_mix_and_match, container, false);
         displayGridView(view);
         presentButtonClick(view);
         return view;
@@ -108,9 +109,8 @@ public class MixAndMatchFragment extends Fragment {
             Log.d("ConvertView", String.valueOf(position));
 
             if (convertView == null) {
-                LayoutInflater vi = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                LayoutInflater vi = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = vi.inflate(R.layout.mix_and_match_image_layout, null);
-
                 holder = new ViewHolder();
                 holder.fileLocation = (ImageButton) convertView.findViewById(R.id.mixAndMatchImageButton);
                 holder.category = (TextView) convertView.findViewById(R.id.mixAndMatchCategoryBanner);

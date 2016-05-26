@@ -36,7 +36,7 @@
             android:background="#caffb637"
             android:textAlignment="center"
             android:textColor="#FFF"
-            android:textAppearance="@style/ButtonSmallestFontStyle"
+            android:textAppearance="@style/ButtonSmallFontStyle"
             android:paddingLeft="0dp"
             android:paddingTop="1dp"
             android:paddingRight="0dp"

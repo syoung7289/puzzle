@@ -16,17 +16,17 @@
             android:layout_height="wrap_content"
             android:background="@drawable/blue_text_view_gradient"
             android:text="@string/select_up_to_six"
-            android:textAppearance="@style/ButtonMediumFontStyle"
+            android:textAppearance="@style/ButtonLargeFontStyle"
             android:layout_margin="10dp"
             android:gravity="center_horizontal"
             android:textColor="#fff"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp" />
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp" />
 
         <RelativeLayout
             android:id="@+id/buttonContainer"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="90dp"
             android:layout_alignParentBottom="true" >
 
             <CheckBox
@@ -36,7 +36,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="3dp"/>
+                android:layout_marginTop="8dp"/>
 
             <Button
                 android:id="@+id/presentOptionsButton"
@@ -46,12 +46,11 @@
                 android:layout_alignParentRight="true"
                 android:background="@drawable/options_button"
                 android:textColor="@color/button_text"
-                android:textAppearance="@style/ButtonMediumFontStyle"
+                android:textAppearance="@style/ButtonLargeFontStyle"
                 android:text="@string/present_options"
                 android:enabled="false"
                 android:layout_margin="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp" />
+                android:padding="20dp" />
 
         </RelativeLayout>
 
@@ -64,7 +63,7 @@
             android:stretchMode="columnWidth"
             android:numColumns="auto_fit"
             android:gravity="center"
-            android:columnWidth="75dp"
+            android:columnWidth="80dp"
             android:horizontalSpacing="10dp"
             android:verticalSpacing="10dp"
             android:layout_marginLeft="10dp"

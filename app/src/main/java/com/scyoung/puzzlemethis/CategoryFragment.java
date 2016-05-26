@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
+import com.scyoung.puzzlemethis.Util.AppUtil;
 import com.scyoung.puzzlemethis.Util.StringUtil;
 
 import java.util.ArrayList;
