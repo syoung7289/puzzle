@@ -87,20 +87,27 @@ public class MixAndMatchFragment extends Fragment {
         private int[] colorNumberArray = getContext().getResources().getIntArray(R.array.colorNumberList);
         private int arrayMax = colorNumberArray.length;
         private int colorIndex = 0;
-        private String lastCategory = "";
+        private Map<String, Integer> colorCategoryMap = new HashMap<>();
+        private boolean[] checkedState;
+        private Object[] holders;
+        private Object[] overlays;
 
         public MixAndMatchImageAdapter(Context context, int resource, List<MixAndMatchImageItem> mixAndMatchImageItems) {
             super(context, resource, mixAndMatchImageItems);
             this.mixAndMatchList = new ArrayList<MixAndMatchImageItem>();
             this.mixAndMatchList.addAll(mixAndMatchImageItems);
+            this.checkedState = new boolean[mixAndMatchImageItems.size()];
+            this.holders = new Object[mixAndMatchImageItems.size()];
+            this.overlays = new Object[mixAndMatchImageItems.size()];
         }
 
         private class ViewHolder {
             ImageButton fileLocation;
             TextView category;
-            CheckBox name;
+            CheckBox cb;
             ProgressBar progress;
             ImageView overlay;
+            int holderPosition;
         }
 
         @Override
@@ -108,31 +115,31 @@ public class MixAndMatchFragment extends Fragment {
             ViewHolder holder = null;
             Log.d("ConvertView", String.valueOf(position));
 
-            if (convertView == null) {
+            if (convertView == null || holders[position] == null) {
                 LayoutInflater vi = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = vi.inflate(R.layout.mix_and_match_image_layout, null);
                 holder = new ViewHolder();
                 holder.fileLocation = (ImageButton) convertView.findViewById(R.id.mixAndMatchImageButton);
                 holder.category = (TextView) convertView.findViewById(R.id.mixAndMatchCategoryBanner);
-                holder.name = (CheckBox) convertView.findViewById(R.id.mixAndMatchImageCheckbox);
+                holder.cb = (CheckBox) convertView.findViewById(R.id.mixAndMatchImageCheckbox);
                 holder.progress = (ProgressBar) convertView.findViewById(R.id.mixAndMatchProgressBar);
-                holder.overlay = (ImageView) convertView.findViewById(R.id.mixAndMatchOverlay);
-                convertView.setTag(holder);
+                overlays[position] = convertView.findViewById(R.id.mixAndMatchOverlay);
+                if (!isImageSet(holder.fileLocation)) {
+                    MixAndMatchImageItem mixAndMatchImageItem = mixAndMatchList.get(position);
+                    mixAndMatchImageItem.setPosition(position);
+//                    mixAndMatchImageItem.setOverlay(holder.overlay);
+                    setupCategoryView(mixAndMatchImageItem, holder);
+                    setupCheckBoxView(mixAndMatchImageItem, holder);
+                    setupImageButton(mixAndMatchImageItem, holder);
+                }
+                holder.holderPosition = position;
+                holders[position] = holder;
             }
-            else {
-                holder = (ViewHolder) convertView.getTag();
-            }
-            if (!isImageSet(holder.fileLocation)) {
-                MixAndMatchImageItem mixAndMatchImageItem = mixAndMatchList.get(position);
-                setupCategoryView(mixAndMatchImageItem, holder);
-                setupCheckBoxView(mixAndMatchImageItem, holder);
-                setupImageButton(mixAndMatchImageItem, holder);
-                mixAndMatchImageItem.setOverlay(holder.overlay);
-            }
+
             return convertView;
         }
 
-        private void setupImageButton(MixAndMatchImageItem mixAndMatchImageItem, ViewHolder holder) {
+        private void setupImageButton(final MixAndMatchImageItem mixAndMatchImageItem, ViewHolder holder) {
             String fileLocation = prefs.getString(mixAndMatchImageItem.getImageFileKey(), null);
             ImageButton imageButton = holder.fileLocation;
             if (fileLocation != null && !(imageButton.getBackground() instanceof ColorDrawable)) {
@@ -141,27 +148,32 @@ public class MixAndMatchFragment extends Fragment {
                     holder.fileLocation.setImageBitmap(image);
                 }
             }
-            holder.fileLocation.setTag(holder.name);
+            holder.fileLocation.setTag(holder.cb);
             holder.fileLocation.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     CheckBox cb = (CheckBox) v.getTag();
                     MixAndMatchImageItem mixAndMatchItem = (MixAndMatchImageItem) cb.getTag();
-                    cb.setChecked(!mixAndMatchItem.isSelected());
+                    boolean newState = !checkedState[mixAndMatchImageItem.getPosition()];
+//                    cb.setChecked(!mixAndMatchItem.isSelected());
+                    checkedState[mixAndMatchImageItem.getPosition()] = newState;
+                    cb.setChecked(newState);
                 }
             });
         }
 
         private void setupCheckBoxView(MixAndMatchImageItem mixAndMatchImageItem, ViewHolder holder) {
-            holder.name.setChecked(mixAndMatchImageItem.isSelected());
-            holder.name.setTag(mixAndMatchImageItem);
-            holder.name.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener() {
+//            holder.cb.setChecked(mixAndMatchImageItem.isSelected());
+            holder.cb.setChecked(checkedState[mixAndMatchImageItem.getPosition()]);
+            holder.cb.setTag(mixAndMatchImageItem);
+            holder.cb.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     MixAndMatchImageItem mixAndMatchImageItem = (MixAndMatchImageItem) buttonView.getTag();
                     if (isChecked && selectedItems >= 6) {
                         //reverse checkbox selection
                         buttonView.setChecked(false);
+                        checkedState[mixAndMatchImageItem.getPosition()] = false;
                     } else {
                         // manage MixAndMatchItem
                         if (isChecked) {
@@ -170,8 +182,10 @@ public class MixAndMatchFragment extends Fragment {
                             selectedItems = selectedItems > 0 ? selectedItems - 1 : selectedItems;
                         }
                         mixAndMatchImageItem.setSelected(isChecked);
+                        checkedState[mixAndMatchImageItem.getPosition()] = isChecked;
                         int visibility = isChecked ? View.VISIBLE : View.INVISIBLE;
-                        mixAndMatchImageItem.getOverlay().setVisibility(visibility);
+//                        mixAndMatchImageItem.getOverlay().setVisibility(visibility);
+                        ((ImageView)overlays[mixAndMatchImageItem.getPosition()]).setVisibility(visibility);
                     }
                     getActivity().findViewById(R.id.presentOptionsButton).setEnabled(selectedItems > 1);
                 }
@@ -181,11 +195,14 @@ public class MixAndMatchFragment extends Fragment {
         private void setupCategoryView(MixAndMatchImageItem mixAndMatchImageItem, ViewHolder holder) {
             String category = mixAndMatchImageItem.getCategory();
             holder.category.setText(category);
-            if (!lastCategory.equals(category)) {
+            if (colorCategoryMap.containsKey(category)) {
+                colorIndex = colorCategoryMap.get(category);
+            }
+            else {
                 colorIndex = colorIndex < arrayMax - 1 ? colorIndex + 1 : 0;
+                colorCategoryMap.put(category, colorIndex);
             }
             holder.category.setBackgroundColor(colorNumberArray[colorIndex]);
-            lastCategory = category;
         }
 
         private boolean isImageSet(ImageView view) {

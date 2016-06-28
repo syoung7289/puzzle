@@ -11,6 +11,7 @@ public class MixAndMatchImageItem implements Comparable {
     String category = null;
     ImageView overlay = null;
     boolean selected = false;
+    int position;
 
     public MixAndMatchImageItem(String imageFileKey, String name, String category, boolean selected) {
         this.imageFileKey = imageFileKey;
@@ -57,6 +58,14 @@ public class MixAndMatchImageItem implements Comparable {
 
     public void setOverlay(ImageView overlay) {
         this.overlay = overlay;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 
     @Override
